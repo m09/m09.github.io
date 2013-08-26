@@ -1,0 +1,11 @@
+# Backup files
+*~
+
+# Haskell build
+/site.hi
+/site.ho
+/site
+
+# Hakyll build
+/_site/*
+/_cache/*
