@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type"
+	  content="text/html; charset=UTF-8">
+    <title>Mog's Bλog | $title$</title>
+    <link rel="stylesheet"
+	  type="text/css"
+	  href="/css/default.css">
+    <link rel='stylesheet'
+	  type='text/css'
+	  href='http://fonts.googleapis.com/css?family=PT+Sans'>
+  </head>
+  <body>
+    <div id="header">
+      <div id="logo">
+        <a href="/index.html">Mog's Bλog</a>
+      </div>
+      <div id="navigation">
+        <a href="/index.html"$if(homeActive)$
+	   class="active"$endif$>
+	  Home
+	</a>
+	<a href="/all-posts.html"$if(allPostsActive)$
+	   class="active"$endif$>
+	  All posts
+	</a>
+	<a href="/about.html"$if(aboutActive)$
+	   class="active"$endif$>
+	  About
+	</a>
+	<a href="/contact.html"$if(contactActive)$
+	   class="active"$endif$>
+	  Contact
+	</a>
+	<a href="/atom.xml">
+	  Atom
+	</a>
+      </div>
+    </div>
+
+    <div id="content">
+      $body$
+    </div>
+  </body>
+</html>
