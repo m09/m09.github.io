@@ -4,6 +4,7 @@
 # Haskell build
 /site.hi
 /site.ho
+/site.o
 /site
 
 # Hakyll build
