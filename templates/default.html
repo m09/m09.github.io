@@ -22,21 +22,13 @@
         <a href="/index.html">Mog's Bλog</a>
       </div>
       <div id="navigation">
-        <a href="/index.html"$if(homeActive)$
+	<a href="/index.html"$if(postsActive)$
 	   class="active"$endif$>
-	  Home
-	</a>
-	<a href="/all-posts.html"$if(allPostsActive)$
-	   class="active"$endif$>
-	  All posts
+	  Posts
 	</a>
 	<a href="/about.html"$if(aboutActive)$
 	   class="active"$endif$>
 	  About
-	</a>
-	<a href="/contact.html"$if(contactActive)$
-	   class="active"$endif$>
-	  Contact
 	</a>
 	<a href="/atom.xml">
 	  Atom

@@ -25,16 +25,6 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" aboutCtx
             >>= relativizeUrls
 
-    match "contact.md" $ do
-        route   $ setExtension "html"
-        let contactCtx =
-                constField "contactActive" "true"    `mappend`
-                constField "title"         "Contact" `mappend`
-                defaultContext
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" contactCtx
-            >>= relativizeUrls
-
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
@@ -43,19 +33,19 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
 
-    create ["all-posts.html"] $ do
+    create ["index.html"] $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
-            let allPostsCtx =
+            let postsCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    constField "allPostsActive" "true"       `mappend`
+                    constField "postsActive" "true"       `mappend`
                     constField "title"          "All posts"  `mappend`
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/all-posts.html" allPostsCtx
-                >>= loadAndApplyTemplate "templates/default.html"   allPostsCtx
+                >>= loadAndApplyTemplate "templates/posts.html" postsCtx
+                >>= loadAndApplyTemplate "templates/default.html"   postsCtx
                 >>= relativizeUrls
 
     create ["atom.xml"] $ do
@@ -73,21 +63,6 @@ main = hakyll $ do
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "posts/*" "content"
             renderRss feedConfiguration feedCtx posts
-
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "homeActive" "true"           `mappend`
-                    constField "title"      "Home"           `mappend`
-                    defaultContext
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
 
