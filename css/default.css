@@ -12,6 +12,12 @@ div#header {
     padding: 12px 0px 12px 0px;
 }
 
+div#footer {
+    border-top: 2px solid black;
+    margin-top: 30px;
+    padding: 12px 0px 12px 0px;
+}
+
 div#logo a {
     color: black;
     float: left;
@@ -49,4 +55,3 @@ div.info {
     font-size: 14px;
     font-style: italic;
 }
-
