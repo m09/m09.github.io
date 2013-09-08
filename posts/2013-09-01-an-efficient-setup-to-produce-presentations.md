@@ -114,7 +114,17 @@ in the presentation directory.
 
 Afterwards, the presentation page is refreshed after each modification
 and is written in an intuitive and efficient language,
-e.g. Markdown. Enjoy! The only thing that I'm bothered with at this
-point is that it loses navigation info, e.g. at which page of the
-presentation you were before the refresh. Any idea on how to handle
-that will be appreciated.
+e.g. Markdown.
+
+Is it the end of our process streamlining? Sadly no. At each automatic
+refresh, the navigation information is lost and the presentation comes
+back to its start. To fix that, there's no way around patching
+DZSlides. Hopefully, it was written with customization in mind and
+it's a trivial matter: by using the shell onstage-cookie-refresh
+present in [my DZSlides fork](https://github.com/Mogzor/dzslides),
+DZSlides will now look for a cookie that has the navigation info saved
+up and use it if available.
+
+Our quest comes to an end and there's nothing left to complain about
+so I guess I have no excuse to postpone the actual presentation
+making! :)

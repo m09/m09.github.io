@@ -7,13 +7,31 @@ import           Hakyll
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    match "img/*" $ do
+    match "assets/ico/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
+    match "assets/img/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "files/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "assets/css/*" $ do
         route   idRoute
         compile compressCssCompiler
+
+    match "feed.md" $ do
+        route   $ setExtension "html"
+        let feedCtx =
+                constField "feedActive" "true"  `mappend`
+                constField "title"      "Feed" `mappend`
+                defaultContext
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/default.html" feedCtx
+            >>= relativizeUrls
 
     match "about.md" $ do
         route   $ setExtension "html"

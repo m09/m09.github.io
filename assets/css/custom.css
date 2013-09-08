@@ -1,0 +1,9 @@
+body {
+    font-family: 'PT Sans', sans-serif;
+}
+
+.info {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
