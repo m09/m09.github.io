@@ -11,7 +11,7 @@ new:
 	@./new_post.sh
 
 publish: build
-	rsync -az --delete _site/ mog@88.191.117.112:www
+	rsync -az --delete _site/ mog@88.191.117.112:www/blog
 
 clean:
 	test -f site && ./site clean || true
