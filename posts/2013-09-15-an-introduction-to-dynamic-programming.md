@@ -3,15 +3,15 @@ title: An introduction to dynamic programming
 author: Mog
 ---
 
-Last year, for the french national event ''les Journées de la
-Science'', two friends and I explained to high-schoolers the basics of
-dynamic programming. Here I'll try to retranscript what we did.
+Last year, for the french national event ''la Fête de la Science'',
+two friends and I explained to high-schoolers the basics of dynamic
+programming. Here I'll try to retranscript what we did.
 
-Complexity
-==========
+<div></div><!--more-->
 
-Intuition
----------
+### Complexity
+
+#### Intuition
 
 First, we gave an intuitive explanation of complexity: let's say you
 are a teacher and are about to enter your classroom. The first thing
@@ -28,8 +28,7 @@ take as many actions as you have students. We'll say the first method
 has a constant complexity regarding the number of students while the
 second has a complexity that grows with the number of students.
 
-Why it matters
---------------
+#### Why it matters
 
 Then, we went on with a little story that is [very well known][1]:
 
@@ -72,8 +71,7 @@ grains required grows exponentially with the number of cells
 considered. We can say that $g_i=2^{i}$ where $g_i$ is the number of
 grains of wheat on the cell $i$ (starting from 0).
 
-Dynamic programming
-===================
+### Dynamic programming
 
 After this introduction to complexity, we went on and tackled an
 [Euler problem][2] about [Manhattan distance][3] that has an
@@ -113,5 +111,7 @@ programming is about. Obviously, finding the recursion gets
 complicated some times, but the basics are simple!
 
 [1]: https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem
+
 [2]: https://projecteuler.net/problem=15
+
 [3]: https://en.wiktionary.org/wiki/Manhattan_distance

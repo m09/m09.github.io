@@ -1,9 +1,29 @@
 body {
-    font-family: 'PT Sans', sans-serif;
+    background-image: url('../img/background.png');
+    background-repeat: repeat;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.content {
+    background-color: white;
+    box-shadow: 2px 2px 2px #aaaaaa;
+    border: 1px solid #dddddd;
+    border-top: 0;
+    padding-bottom: 5px;
+    padding-top: 10px;
+    margin-bottom: 10px;
 }
 
 .info {
     font-size: 14px;
     font-style: italic;
     margin-bottom: 20px;
+}
+
+.self-picture {
+    margin-right: 15px;
+    margin-bottom: 15px;
 }

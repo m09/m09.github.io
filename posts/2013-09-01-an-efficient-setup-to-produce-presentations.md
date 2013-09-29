@@ -4,16 +4,18 @@ author: Mog
 ---
 
 Recently I had to write several presentations and I wasn't happy with
-the tools I was used to ([Beamer](https://en.wikipedia.org/wiki/Beamer_%28LaTeX%29) + [AUCTeX](https://www.gnu.org/software/auctex/)).
+the tools I was used to ([Beamer][beamer] + [AUCTeX][auctex]).
 
 I read a little bit about what my friends were currently using and
-gave a try to [several HTML5/CSS3/js solutions](http://www.bortzmeyer.org/logiciel-presentation-nouveau.html). The one that impressed
-me the most was [DZSlides](http://paulrouget.com/dzslides/) by Paul
-Rouget, especially for its awesome control panel (called shell in the
-DZSlides doc). Even the basic `onstage.html` one, provided with the
-vanilla framework, gives you lots of tools to work with: a preview of
-the next slide, a timer and notes hidden from the slides to help you
-out during the presentation.
+gave a try to [several HTML5/CSS3/js solutions][bortzmeyer]. The one
+that impressed me the most was [DZSlides][dzslides] by Paul Rouget,
+especially for its awesome control panel (called shell in the DZSlides
+doc). Even the basic `onstage.html` one, provided with the vanilla
+framework, gives you lots of tools to work with: a preview of the next
+slide, a timer and notes hidden from the slides to help you out during
+the presentation.
+
+<div></div><!--more-->
 
 The basics of DZSlides are simple: you complete an HTML template with
 your slides (specified with regular HTML5 and CSS3), and use a shell
@@ -24,16 +26,14 @@ presentation file is `slides.html` and if you want to use the
 
 The main problem with that particular framework from my perspective
 was quite embarassing: it required a good habit of producing HTML5 and
-CSS3 to be productive, and those are two technologies I barely
-touched recently.
+CSS3 to be productive, and those are two technologies I barely touched
+recently.
 
-Here enters
-[Pandoc](http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html)
-and its ability to turn Markdown into several presentation frameworks
-outputs. The page linked provides a quick and sufficient introduction
-on the specifics of Pandoc's Markdown conversion semantics. Here is a
-sample command to compile a markdown file into a DZSlides
-presentation:
+Here enters [Pandoc][pandoc] and its ability to turn Markdown into
+several presentation frameworks outputs. The page linked provides a
+quick and sufficient introduction on the specifics of Pandoc's
+Markdown conversion semantics. Here is a sample command to compile a
+markdown file into a DZSlides presentation:
 
 ```shell
 pandoc --smart --standalone \
@@ -70,12 +70,11 @@ more in depth at the workflow in use. Currently we need to edit a
 Markdown file, compile an html presentation from it using Pandoc and
 refresh a webpage to see the result of our modifications. That's three
 steps. A quick fix to the need of html compilation is to use
-[inotify-tools](https://github.com/rvoicilas/inotify-tools/wiki) in
-order to know when the file changes to compile it automatically. Then,
-to avoid refreshing the shell webpage, we can use an add-on such as
-[AutoReload](https://addons.mozilla.org/en-us/firefox/addon/auto-reload/)
-to save another action. To ease the combination of those tools, we can
-use a Makefile as follows:
+[inotify-tools][inotify] in order to know when the file changes to
+compile it automatically. Then, to avoid refreshing the shell webpage,
+we can use an add-on such as [AutoReload][autoreload] to save another
+action. To ease the combination of those tools, we can use a Makefile
+as follows:
 
 ```shell
 markdown = $(shell ls *.md)
@@ -121,10 +120,25 @@ refresh, the navigation information is lost and the presentation comes
 back to its start. To fix that, there's no way around patching
 DZSlides. Hopefully, it was written with customization in mind and
 it's a trivial matter: by using the shell onstage-cookie-refresh
-present in [my DZSlides fork](https://github.com/Mogzor/dzslides),
-DZSlides will now look for a cookie that has the navigation info saved
-up and use it if available.
+present in [my DZSlides fork][fork], DZSlides will now look for a
+cookie that has the navigation info saved up and use it if available.
 
 Our quest comes to an end and there's nothing left to complain about
 so I guess I have no excuse to postpone the actual presentation
 making! :)
+
+[beamer]:     https://en.wikipedia.org/wiki/Beamer_(LaTeX)
+
+[auctex]:     https://www.gnu.org/software/auctex/
+
+[bortzmeyer]: http://www.bortzmeyer.org/logiciel-presentation-nouveau.html
+
+[dzslides]:   http://paulrouget.com/dzslides/
+
+[pandoc]:     http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html
+
+[inotify]:    https://github.com/rvoicilas/inotify-tools/wiki
+
+[autoreload]: https://addons.mozilla.org/en-us/firefox/addon/auto-reload/
+
+[fork]:       https://github.com/Mogzor/dzslides

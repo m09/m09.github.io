@@ -3,17 +3,19 @@ title: A nice maths problem: the B52 and the submarine
 author: Mog
 ---
 
-Problem statement
-=================
-
-A B52 tries to bomb a submarine. It can't see it and has no radar or
-anything of the sort. It can locate itself on a ℕ×ℕ grid though.
+During a class the other day, our teacher told us about a nice
+problem: a B52 tries to bomb a submarine. It can't see it and has no
+radar or anything of the sort. It can locate itself on a ℕ×ℕ grid
+though.
 
 What we know about the submarine is the following: it starts on whole
 coordinates and at each step, it moves by a vector whose dimensions
-are whole too. For example, for a submarine that starts on `(10, -5)`
-and has a move vector of `(-6, 1)`, we would have the following first
-6 steps:
+are whole too.
+
+<div></div><!--more-->
+
+For example, for a submarine that starts on `(10, -5)` and has a move
+vector of `(-6, 1)`, we would have the following first 6 steps:
 
                         |
                         |
@@ -29,8 +31,7 @@ and has a move vector of `(-6, 1)`, we would have the following first
 The goal is to come up with a strategy to eventually bomb the
 submarine.
 
-Idea
-====
+### Idea
 
 The idea here is to somehow enumerate all the possible submarines. If
 we can enumerate them, we can just try to bomb a possible submarine at
@@ -41,8 +42,7 @@ submarine that starts at `(10892, -654)` and moves by a vector of
 `(87, 73)` at each step, we'll bomb the cell `(10892 + 87 * i, -654 +
 73 * i)`
 
-Enumeration
-===========
+### Enumeration
 
 First, we can remark that a submarine is defined by a four-dimensions
 vector `(x, y, dx, dy)` in ℕ<sup>4</sup>:

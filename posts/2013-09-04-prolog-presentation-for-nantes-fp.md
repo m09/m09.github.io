@@ -4,7 +4,11 @@ author: Mog
 ---
 
 I'll be giving a small talk tonight to introduce logic programming for
-[Nantes-FP][1]. [Here is][2] the latest version of the slides below
+[Nantes-FP][nfp].
+
+<div></div><!--more-->
+
+[Here is][repo] the latest version of the slides below
 (french) :
 
 <iframe class="frame"
@@ -16,7 +20,8 @@ I'll be giving a small talk tonight to introduce logic programming for
   </a>
 </iframe>
 
-[1]: http://nantes-fp.github.io/
-     "Nantes-FP website"
-[2]: https://github.com/nantes-fp/seance-prolog
-     "Nantes-FP Prolog session on github"
+[nfp]:  http://nantes-fp.github.io/
+        "Nantes-FP website"
+
+[repo]: https://github.com/nantes-fp/seance-prolog
+        "Nantes-FP Prolog session on github"

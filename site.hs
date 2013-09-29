@@ -1,21 +1,14 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+--------------------------------------------------------------------------------
+import           Data.Monoid     ( (<>)         )
 import           Hakyll
-
-
+import           System.FilePath ( takeBaseName )
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    match "assets/ico/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "assets/img/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "files/*" $ do
+    match (    "assets/ico/*"
+          .||. "assets/img/*" ) $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -23,21 +16,27 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "feed.md" $ do
-        route   $ setExtension "html"
-        let feedCtx =
-                constField "feedActive" "true"  `mappend`
-                constField "title"      "Feed" `mappend`
-                defaultContext
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" feedCtx
-            >>= relativizeUrls
+    match "files/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "static/*.md" $ do
+        route $ gsubRoute "static/" (const "") `composeRoutes`
+                  setExtension "html"
+        compile $ do
+            path <- getResourceFilePath
+            let baseName = takeBaseName path
+                staticCtx = constField (baseName ++ "Active") "true" <>
+                            defaultContext
+            pandocCompiler
+                >>= loadAndApplyTemplate "templates/default.html" staticCtx
+                >>= relativizeUrls
 
     match "about.md" $ do
         route   $ setExtension "html"
         let aboutCtx =
-                constField "aboutActive" "true"  `mappend`
-                constField "title"       "About" `mappend`
+                constField "aboutActive" "true"  <>
+                constField "title"       "About" <>
                 defaultContext
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" aboutCtx
@@ -57,9 +56,11 @@ main = hakyll $ do
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let postsCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "postsActive" "true"       `mappend`
-                    constField "title"          "All posts"  `mappend`
+                    listField "posts"
+                              (teaserField "teaser" "content" <> postCtx)
+                              (return posts)                              <>
+                    constField "postsActive" "true"                       <>
+                    constField "title"       "All posts"                  <>
                     defaultContext
 
             makeItem ""
@@ -70,7 +71,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = postCtx `mappend` bodyField "description"
+            let feedCtx = postCtx <> bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "posts/*" "content"
             renderAtom feedConfiguration feedCtx posts
@@ -78,7 +79,7 @@ main = hakyll $ do
     create ["rss.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = postCtx `mappend` bodyField "description"
+            let feedCtx = postCtx <> bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "posts/*" "content"
             renderRss feedConfiguration feedCtx posts
@@ -88,9 +89,7 @@ main = hakyll $ do
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
-postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+postCtx = dateField "date" "%B %e, %Y" <> defaultContext
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
