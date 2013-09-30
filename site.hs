@@ -1,10 +1,23 @@
 --------------------------------------------------------------------------------
+-- GHC Stuff                                                                  --
+--------------------------------------------------------------------------------
+
+{-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE OverloadedStrings #-}
+
 --------------------------------------------------------------------------------
-import           Data.Monoid     ( (<>)         )
+-- Imports                                                                    --
+--------------------------------------------------------------------------------
+
+import           Data.Functor        ( (<$>)        )
+import           Data.Monoid         ( (<>)         )
 import           Hakyll
-import           System.FilePath ( takeBaseName )
+import           System.FilePath     ( takeBaseName )
+
 --------------------------------------------------------------------------------
+-- Hakyll build rules                                                         --
+--------------------------------------------------------------------------------
+
 main :: IO ()
 main = hakyll $ do
     match (    "assets/ico/*"
@@ -50,46 +63,98 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/signature.html"    postCtx
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
-
-    create ["index.html"] $ do
+    
+    postsNumber <- ((`div` postsPerPage) . length) <$> getMatches "posts/*"
+    let posts  = (recentFirst =<< loadAll "posts/*" :: Compiler [Item String])
+        chunks = chunk postsPerPage <$> posts
+        indeces = map (fromFilePath
+                       . (++ ".html")
+                       . ("index" ++))
+                      ("" : map show [2 .. postsNumber])
+    
+    create indeces $ do
         route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let postsCtx =
-                    listField "posts"
-                              (teaserField "teaser" "content" <> postCtx)
-                              (return posts)                              <>
-                    constField "postsActive" "true"                       <>
-                    constField "title"       "All posts"                  <>
-                    defaultContext
-
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/posts.html" postsCtx
-                >>= loadAndApplyTemplate "templates/default.html"   postsCtx
-                >>= relativizeUrls
-
+        compile $ indexCompiler chunks
+    
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
             let feedCtx = postCtx <> bodyField "description"
-            posts <- fmap (take 10) . recentFirst =<<
+            items <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "posts/*" "content"
-            renderAtom feedConfiguration feedCtx posts
-
+            renderAtom feedConfiguration feedCtx items
+  
     create ["rss.xml"] $ do
         route idRoute
         compile $ do
             let feedCtx = postCtx <> bodyField "description"
-            posts <- fmap (take 10) . recentFirst =<<
+            items <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "posts/*" "content"
-            renderRss feedConfiguration feedCtx posts
+            renderRss feedConfiguration feedCtx items
 
     match "templates/*" $ compile templateCompiler
 
+--------------------------------------------------------------------------------
+-- Hakyll dynamic helper stuff                                                --
+--------------------------------------------------------------------------------
+
+indexCompiler :: Compiler [[Item String]]
+              -> Compiler (Item String)
+indexCompiler chunks = do
+    index <- extractIndex <$> getUnderlying
+    size <- length <$> chunks
+    let postsCtx =
+            listField "posts"
+                      (teaserField "teaser" "content" <> postCtx)
+                      ((!! index) <$> chunks)            <>
+            constField "postsActive" "true"                       <>
+            constField "title"       "All posts"                  <>
+            defaultContext
+    item      <- makeItem ""
+    posted    <- loadAndApplyTemplate "templates/posts.html"   postsCtx item
+    naved <- loadAndApplyTemplate
+                 "templates/nav.html"
+                 (postsCtx <> navCtx index
+                                     (firstIndex index)
+                                     (lastIndex index size))
+                 posted
+    defaulted <- loadAndApplyTemplate "templates/default.html" postsCtx naved
+    relativizeUrls defaulted
+
+extractIndex :: Identifier -> Int
+extractIndex identifier | null s    = 0
+                        | otherwise = (read s) - 1
+    where s = takeWhile (/= '.') . drop 5 . toFilePath $ identifier
+
+firstIndex :: Int -> Bool
+firstIndex 0 = True
+firstIndex _ = False
+
+lastIndex :: Int -> Int -> Bool
+lastIndex _     0    = True
+lastIndex index size = index == size - 1
+
+indexString :: Int -> String
+indexString index = if index == 0 then "" else show (index + 1) 
+
+navCtx :: Int -> Bool -> Bool -> Context String
+navCtx index f l = (if f
+                    then missingField
+                    else constField "next" (indexString (index - 1)))
+                   <> (if l
+                       then missingField
+                       else constField "prev" (indexString (index + 1)))
+                   <> defaultContext
 
 --------------------------------------------------------------------------------
+-- Hakyll static helper stuff                                                 --
+--------------------------------------------------------------------------------
+
 postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y" <> defaultContext
+
+postsPerPage :: Int
+postsPerPage = 10
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -99,3 +164,12 @@ feedConfiguration = FeedConfiguration
     , feedAuthorEmail = "hugo.mougard@gmail.com"
     , feedRoot        = "http://blog.creedy.eu"
     }
+
+--------------------------------------------------------------------------------
+-- non-Hakyll helper stuff                                                    --
+--------------------------------------------------------------------------------
+
+chunk      :: Int -> [a] -> [[a]]
+chunk _ [] = []
+chunk n xs = ys : chunk n zs
+    where (ys, zs) = splitAt n xs
