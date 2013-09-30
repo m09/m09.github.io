@@ -97,5 +97,5 @@ feedConfiguration = FeedConfiguration
     , feedDescription = "The place where I share whatever I want to share."
     , feedAuthorName  = "Hugo 'Mog' Mougard"
     , feedAuthorEmail = "hugo.mougard@gmail.com"
-    , feedRoot        = "http://www.creedy.eu"
+    , feedRoot        = "http://blog.creedy.eu"
     }
