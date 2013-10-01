@@ -2,17 +2,17 @@
 -- GHC Stuff                                                                  --
 --------------------------------------------------------------------------------
 
-{-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wall #-}
 
 --------------------------------------------------------------------------------
 -- Imports                                                                    --
 --------------------------------------------------------------------------------
 
-import           Data.Functor        ( (<$>)        )
-import           Data.Monoid         ( (<>)         )
-import           Hakyll
-import           System.FilePath     ( takeBaseName )
+import Data.Functor    ( (<$>)        )
+import Data.Monoid     ( (<>)         )
+import Hakyll
+import System.FilePath ( takeBaseName )
 
 --------------------------------------------------------------------------------
 -- Hakyll build rules                                                         --
@@ -86,53 +86,36 @@ main = hakyll $ do
 -- Hakyll dynamic helper stuff                                                --
 --------------------------------------------------------------------------------
 
-indexCompiler :: Compiler [[Item String]]
-              -> Compiler (Item String)
+indexCompiler :: Compiler [[Item String]] -> Compiler (Item String)
 indexCompiler chunks = do
     index <- extractIndex <$> getUnderlying
     size <- length <$> chunks
-    let postsCtx =
-            listField "posts"
-                      (teaserField "teaser" "content" <> postCtx)
-                      ((!! index) <$> chunks)            <>
-            constField "postsActive" "true"                       <>
-            constField "title"       "All posts"                  <>
-            defaultContext
-    item      <- makeItem ""
-    posted    <- loadAndApplyTemplate "templates/posts.html"   postsCtx item
-    naved <- loadAndApplyTemplate
-                 "templates/nav.html"
-                 (postsCtx <> navCtx index
-                                     (firstIndex index)
-                                     (lastIndex index size))
-                 posted
-    defaulted <- loadAndApplyTemplate "templates/structure.html" postsCtx naved
-    relativizeUrls defaulted
+    let postsCtx = listField "posts"
+                             (teaserField "teaser" "content" <> postCtx)
+                             ((!! index) <$> chunks)                     <>
+                   constField "postsActive" "true"                       <>
+                   constField "title"       "All posts"                  <>
+                   defaultContext
+    makeItem ""
+        >>= loadAndApplyTemplate "templates/posts.html" postsCtx
+        >>= loadAndApplyTemplate "templates/nav.html"
+                                 (postsCtx <> navCtx index size)
+        >>= loadAndApplyTemplate "templates/structure.html" postsCtx
+        >>= relativizeUrls
 
 extractIndex :: Identifier -> Int
-extractIndex identifier | null s    = 0
-                        | otherwise = (read s) - 1
-    where s = takeWhile (/= '.') . drop 5 . toFilePath $ identifier
+extractIndex i = if null s then 0 else (read s) - 1
+  where s = takeWhile (/= '.') . drop 5 . toFilePath $ i
 
-firstIndex :: Int -> Bool
-firstIndex 0 = True
-firstIndex _ = False
-
-lastIndex :: Int -> Int -> Bool
-lastIndex _     0    = True
-lastIndex index size = index == size - 1
-
-indexString :: Int -> String
-indexString index = if index == 0 then "" else show (index + 1) 
-
-navCtx :: Int -> Bool -> Bool -> Context String
-navCtx index f l = (if f
-                    then missingField
-                    else constField "next" (indexString (index - 1)))
-                   <> (if l
+navCtx :: Int -> Int -> Context String
+navCtx index size = (if index == 0
+                     then missingField
+                     else constField "next" (indexString (index - 1)))
+                    <> (if index == size - 1
                        then missingField
                        else constField "prev" (indexString (index + 1)))
-                   <> defaultContext
+                    <> defaultContext
+  where indexString i = if i == 0 then "" else show (i + 1)
 
 --------------------------------------------------------------------------------
 -- Hakyll static helper stuff                                                 --
