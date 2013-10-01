@@ -29,8 +29,8 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "files/*" $ do
-        route   idRoute
+    match "resources/**" $ do
+        route $ gsubRoute "resources/" (const "")
         compile copyFileCompiler
 
     match "static/*.md" $ do
@@ -38,38 +38,26 @@ main = hakyll $ do
                   setExtension "html"
         compile $ do
             path <- getResourceFilePath
-            let baseName = takeBaseName path
+            let baseName  = takeBaseName path
                 staticCtx = constField (baseName ++ "Active") "true" <>
                             defaultContext
             pandocCompiler
-                >>= loadAndApplyTemplate "templates/default.html" staticCtx
+                >>= loadAndApplyTemplate "templates/structure.html" staticCtx
                 >>= relativizeUrls
-
-    match "about.md" $ do
-        route   $ setExtension "html"
-        let aboutCtx =
-                constField "aboutActive" "true"  <>
-                constField "title"       "About" <>
-                defaultContext
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" aboutCtx
-            >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
-                >>= saveSnapshot "content"
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
-                >>= loadAndApplyTemplate "templates/signature.html"    postCtx
-                >>= loadAndApplyTemplate "templates/default.html" postCtx
-                >>= relativizeUrls
+            >>= saveSnapshot "content"
+            >>= loadAndApplyTemplate "templates/post.html"      postCtx
+            >>= loadAndApplyTemplate "templates/signature.html" postCtx
+            >>= loadAndApplyTemplate "templates/structure.html" postCtx
+            >>= relativizeUrls
     
     postsNumber <- ((`div` postsPerPage) . length) <$> getMatches "posts/*"
     let posts  = (recentFirst =<< loadAll "posts/*" :: Compiler [Item String])
         chunks = chunk postsPerPage <$> posts
-        indeces = map (fromFilePath
-                       . (++ ".html")
-                       . ("index" ++))
+        indeces = map (fromFilePath . (++ ".html") . ("index" ++))
                       ("" : map show [2 .. postsNumber])
     
     create indeces $ do
@@ -118,7 +106,7 @@ indexCompiler chunks = do
                                      (firstIndex index)
                                      (lastIndex index size))
                  posted
-    defaulted <- loadAndApplyTemplate "templates/default.html" postsCtx naved
+    defaulted <- loadAndApplyTemplate "templates/structure.html" postsCtx naved
     relativizeUrls defaulted
 
 extractIndex :: Identifier -> Int
