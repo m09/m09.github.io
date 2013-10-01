@@ -1,17 +1,16 @@
 #!/bin/bash
 
-read -r -p "Post name > "
+read -r -p "Event name > "
 title=${REPLY}
 title_clean="$(<<< "$title" \
     iconv -f utf8 -t ascii//translit \
-    | tr '[:upper:]' '[:lower:]' \
-    | tr -dc 'a-z0-9. _-' \
-    | tr ' ' '-')"
+    | tr ' [:upper:]' '-[:lower:]' \
+    | tr -dc 'a-z0-9._-')"
 
-filename="$(date "+%Y-%m-%d")-$title_clean.md"
+filename="posts/$(date "+%Y-%m-%d")-$title_clean.md"
 echo "---
 title: $title
 author: Mog
----" > "posts/$filename"
+---" > "$filename"
 
-emacs "posts/$filename"
+emacs "$filename" &
