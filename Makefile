@@ -10,8 +10,8 @@ site: site.hs
 new:
 	@./new_post.sh
 
-publish: build
-	rsync -az --delete _site/ mog@88.191.117.112:www/blog
+publish: clean build
+	rsync -az --delete _site/ mog@crydee.eu:www/blog
 
 clean:
 	test -f site && ./site clean || true
