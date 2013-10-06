@@ -10,6 +10,7 @@
 --------------------------------------------------------------------------------
 
 import Data.Functor    ( (<$>)        )
+import Data.List.Split ( chunksOf     )
 import Data.Monoid     ( (<>)         )
 import Hakyll
 import System.FilePath ( takeBaseName )
@@ -56,7 +57,7 @@ main = hakyll $ do
     
     postsNumber <- ((`div` postsPerPage) . length) <$> getMatches "posts/*"
     let posts  = (recentFirst =<< loadAll "posts/*" :: Compiler [Item String])
-        chunks = chunk postsPerPage <$> posts
+        chunks = chunksOf postsPerPage <$> posts
         indeces = map (fromFilePath . (++ ".html") . ("index" ++))
                       ("" : map show [2 .. postsNumber])
     
@@ -135,12 +136,3 @@ feedConfiguration = FeedConfiguration
     , feedAuthorEmail = "hugo.mougard@gmail.com"
     , feedRoot        = "http://blog.creedy.eu"
     }
-
---------------------------------------------------------------------------------
--- non-Hakyll helper stuff                                                    --
---------------------------------------------------------------------------------
-
-chunk      :: Int -> [a] -> [[a]]
-chunk _ [] = []
-chunk n xs = ys : chunk n zs
-    where (ys, zs) = splitAt n xs
