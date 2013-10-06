@@ -2,18 +2,18 @@
 -- GHC Stuff                                                                  --
 --------------------------------------------------------------------------------
 
-{-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS_GHC -Wall #-}
+{-#    LANGUAGE          OverloadedStrings #-}
+{-#    OPTIONS_GHC       -Wall             #-}
 
 --------------------------------------------------------------------------------
 -- Imports                                                                    --
 --------------------------------------------------------------------------------
 
-import Data.Functor    ( (<$>)        )
-import Data.List.Split ( chunksOf     )
-import Data.Monoid     ( (<>)         )
+import Data.Functor    ( (<$>)               )
+import Data.List.Split ( chunksOf            )
+import Data.Monoid     ( (<>)                )
 import Hakyll
-import System.FilePath ( takeBaseName )
+import System.FilePath ( takeBaseName        )
 
 --------------------------------------------------------------------------------
 -- Hakyll build rules                                                         --
@@ -133,6 +133,6 @@ feedConfiguration = FeedConfiguration
     { feedTitle       = "Mog's Bλog"
     , feedDescription = "The place where I share whatever I want to share."
     , feedAuthorName  = "Hugo 'Mog' Mougard"
-    , feedAuthorEmail = "hugo.mougard@gmail.com"
+    , feedAuthorEmail = "mog@crydee.eu"
     , feedRoot        = "http://blog.creedy.eu"
     }
