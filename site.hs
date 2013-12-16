@@ -22,7 +22,8 @@ import System.FilePath ( takeBaseName        )
 main :: IO ()
 main = hakyll $ do
     match (    "assets/ico/*"
-          .||. "assets/img/*" ) $ do
+          .||. "assets/img/*"
+          .||. "posts/*/**" ) $ do
         route   idRoute
         compile copyFileCompiler
 
