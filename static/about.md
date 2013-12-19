@@ -2,14 +2,14 @@
 
 First and foremost, to discuss the content of this blog or about
 anything you'd like, you can [email me][mail] or talk to me on
-[freenode][freenode]---I'm m0g back there (with a zero).
+[freenode][freenode]---I'm m09 back there (with a zero and a nine).
 
 Otherwise, I am Hugo Mougard and currently a Master's degree student
 at the [University of Nantes][atal], in the natural language
-processing field---here is my [résumé][resume]. I am also the
-president of the [ASCII][ascii] association---the computer students
-society of my university and I enjoy going to the [Nantes Functional
-Programming Group][nfp].
+processing field---here is my [résumé][resume]. I am also a proud
+member (and ex-president) of the [ASCII][ascii] association---the
+computer students society of my university and I enjoy going to the
+[Nantes Functional Programming Group][nfp].
 
 Besides interesting problems and algorithms, I love free software as a
 way to have a philosophically interesting impact on society whilst
