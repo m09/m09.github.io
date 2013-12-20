@@ -1,3 +1,7 @@
+---
+title: About this blog and its author
+---
+
 <img class="pull-left self-picture" src="/assets/img/me.jpg">
 
 First and foremost, to discuss the content of this blog or about
@@ -28,7 +32,7 @@ movies][million], philosophy, boxing and strategy games---from
 [atal]:     http://atal.univ-nantes.fr/
             "The webpage of my Master"
 
-[resume]:   http://crydee.eu/public/resume.pdf
+[resume]:   http://public.crydee.eu/resume.pdf
             "Résumé"
 
 [ascii]:    http://ascii.univ-nantes.fr/
