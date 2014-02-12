@@ -11,7 +11,7 @@ new:
 	@./new_post.sh
 
 publish: clean build
-	rsync -az --delete _site/ mog@crydee.eu:www/blog
+	rsync -az --delete _site/ ~/server/www/blog
 
 clean:
 	test -f site && ./site clean || true
