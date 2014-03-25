@@ -13,4 +13,15 @@ title: $title
 author: Mog
 ---" > "$filename"
 
-emacs "$filename" &
+if [[ $VISUAL ]]; then
+    $VISUAL "$filename" &
+    disown
+elif [[ $EDITOR ]]; then
+    $EDITOR "$filename"
+else
+    {
+        echo -n 'Please set your VISUAL and EDITOR '
+        echo 'variables. Defaulting to nano.'
+    } >&2
+    nano "$filename"
+fi
