@@ -1,3 +1,5 @@
+module Main where
+
 --------------------------------------------------------------------------------
 -- GHC Stuff                                                                  --
 --------------------------------------------------------------------------------
@@ -9,7 +11,6 @@
 -- Imports                                                                    --
 --------------------------------------------------------------------------------
 
-import Data.Functor    ( (<$>)               )
 import Data.List.Split ( chunksOf            )
 import Data.Monoid     ( (<>)                )
 import Hakyll
@@ -21,21 +22,21 @@ import System.FilePath ( takeBaseName        )
 
 main :: IO ()
 main = hakyll $ do
-    match (    "assets/ico/*"
-          .||. "assets/img/*"
-          .||. "posts/*/**" ) $ do
+    match (    fromGlob "assets/ico/*"
+          .||. fromGlob "assets/img/*"
+          .||. fromGlob "posts/*/**" ) $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "assets/css/*" $ do
+    match (fromGlob "assets/css/*") $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "resources/**" $ do
+    match (fromGlob "resources/**") $ do
         route $ gsubRoute "resources/" (const "")
         compile copyFileCompiler
 
-    match "static/*.md" $ do
+    match (fromGlob "static/*.md") $ do
         route $ gsubRoute "static/" (const "") `composeRoutes`
                   setExtension "html"
         compile $ do
@@ -44,20 +45,26 @@ main = hakyll $ do
                 staticCtx = constField (baseName ++ "Active") "true" <>
                             defaultContext
             pandocCompiler
-                >>= loadAndApplyTemplate "templates/structure.html" staticCtx
+                >>= loadAndApplyTemplate (fromFilePath "templates/structure.html")
+                                         staticCtx
                 >>= relativizeUrls
 
-    match "posts/*" $ do
+    match (fromGlob "posts/*") $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/post.html"      postCtx
-            >>= loadAndApplyTemplate "templates/signature.html" postCtx
-            >>= loadAndApplyTemplate "templates/structure.html" postCtx
+            >>= loadAndApplyTemplate (fromFilePath "templates/post.html")
+                                     postCtx
+            >>= loadAndApplyTemplate (fromFilePath "templates/signature.html")
+                                     postCtx
+            >>= loadAndApplyTemplate (fromFilePath "templates/structure.html")
+                                     postCtx
             >>= relativizeUrls
     
-    postsNumber <- ((`div` postsPerPage) . length) <$> getMatches "posts/*"
-    let posts  = (recentFirst =<< loadAll "posts/*" :: Compiler [Item String])
+    postsNumber <- ((`div` postsPerPage) . length)
+      <$> getMatches (fromGlob "posts/*")
+    let posts  = (recentFirst =<< loadAll (fromGlob "posts/*")
+                  :: Compiler [Item String])
         chunks = chunksOf postsPerPage <$> posts
         indeces = map (fromFilePath . (++ ".html") . ("index" ++))
                       ("" : map show [2 .. postsNumber])
@@ -66,23 +73,23 @@ main = hakyll $ do
         route idRoute
         compile $ indexCompiler chunks
     
-    create ["atom.xml"] $ do
+    create [fromFilePath "atom.xml"] $ do
         route idRoute
         compile $ do
             let feedCtx = postCtx <> bodyField "description"
             items <- fmap (take 10) . recentFirst =<<
-                loadAllSnapshots "posts/*" "content"
+                loadAllSnapshots (fromGlob "posts/*") "content"
             renderAtom feedConfiguration feedCtx items
   
-    create ["rss.xml"] $ do
+    create [fromFilePath "rss.xml"] $ do
         route idRoute
         compile $ do
             let feedCtx = postCtx <> bodyField "description"
             items <- fmap (take 10) . recentFirst =<<
-                loadAllSnapshots "posts/*" "content"
+                loadAllSnapshots (fromGlob "posts/*") "content"
             renderRss feedConfiguration feedCtx items
 
-    match "templates/*" $ compile templateCompiler
+    match (fromGlob "templates/*") $ compile templateCompiler
 
 --------------------------------------------------------------------------------
 -- Hakyll dynamic helper stuff                                                --
@@ -99,10 +106,12 @@ indexCompiler chunks = do
                    constField "title"       "All posts"                  <>
                    defaultContext
     makeItem ""
-        >>= loadAndApplyTemplate "templates/posts.html" postsCtx
-        >>= loadAndApplyTemplate "templates/nav.html"
+        >>= loadAndApplyTemplate (fromFilePath "templates/posts.html")
+                                 postsCtx
+        >>= loadAndApplyTemplate (fromFilePath "templates/nav.html")
                                  (postsCtx <> navCtx index size)
-        >>= loadAndApplyTemplate "templates/structure.html" postsCtx
+        >>= loadAndApplyTemplate (fromFilePath "templates/structure.html")
+                                 postsCtx
         >>= relativizeUrls
 
 extractIndex :: Identifier -> Int
@@ -131,9 +140,9 @@ postsPerPage = 10
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
-    { feedTitle       = "Mog's Bλog"
+    { feedTitle       = "m09's blog"
     , feedDescription = "The place where I share whatever I want to share."
-    , feedAuthorName  = "Hugo 'Mog' Mougard"
+    , feedAuthorName  = "Hugo “m09” Mougard"
     , feedAuthorEmail = "mog@crydee.eu"
-    , feedRoot        = "http://blog.creedy.eu"
+    , feedRoot        = "http://blog.crydee.eu"
     }

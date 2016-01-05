@@ -1,12 +1,9 @@
+# Hakyll build
+_site
+_cache
+
+# Stack stuff
+.stack-work
+
 # Backup files
 *~
-
-# Haskell build
-/site.hi
-/site.ho
-/site.o
-/site
-
-# Hakyll build
-/_site/*
-/_cache/*

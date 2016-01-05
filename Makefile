@@ -1,20 +1,20 @@
 all: build
 
 build: site
-	./site build
+	stack exec site build
 
-site: site.hs
-	ghc --make site.hs
-	./site clean
+site: app/Site.hs
+	stack setup
+	stack build
 
 new:
 	@./new_post.sh
 
 publish: clean build
-	rsync -az --delete _site/ mog@crydee.eu:www/blog
+	rsync -az --delete _site/ crydee:www/blog
 
 clean:
-	test -f site && ./site clean || true
-	rm -f site site.hi site.o
+	stack clean
+	rm -rf _cache _site
 
-.PHONY: all build new publish clean
+.PHONY: all build site new publish clean
