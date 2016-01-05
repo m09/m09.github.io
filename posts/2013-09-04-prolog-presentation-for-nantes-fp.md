@@ -1,6 +1,6 @@
 ---
 title: Prolog presentation for Nantes FP
-author: Mog
+author: m09
 ---
 
 I'll be giving a small talk tonight to introduce logic programming for

@@ -1,6 +1,6 @@
 ---
 title: An introduction to dynamic programming
-author: Mog
+author: m09
 ---
 
 Last year, for the french national event ''la Fête de la Science'',

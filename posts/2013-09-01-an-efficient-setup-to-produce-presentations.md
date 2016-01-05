@@ -1,6 +1,6 @@
 ---
 title: An efficient setup to produce presentations
-author: Mog
+author: m09
 ---
 
 Recently I had to write several presentations and I wasn't happy with

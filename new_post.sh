@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -r -p "Event name > "
+read -r -p "Post title > "
 title=${REPLY}
 title_clean="$(<<< "$title" \
     iconv -f utf8 -t ascii//translit \
@@ -10,7 +10,7 @@ title_clean="$(<<< "$title" \
 filename="posts/$(date "+%Y-%m-%d")-$title_clean.md"
 echo "---
 title: $title
-author: Mog
+author: m09
 ---" > "$filename"
 
 if [[ $VISUAL ]]; then

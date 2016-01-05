@@ -1,6 +1,6 @@
 ---
 title: A Hidden Markov Model attempting to write
-author: Mog
+author: m09
 ---
 
 <style>

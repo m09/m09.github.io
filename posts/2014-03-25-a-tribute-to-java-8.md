@@ -1,6 +1,6 @@
 ---
 title: A tribute to Java 8
-author: Mog
+author: m09
 ---
 
 Java 8 got released a few days ago and I am very excited about

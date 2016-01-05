@@ -1,6 +1,6 @@
 ---
 title: Great coursera on Søren Kierkegaard
-author: Mog
+author: m09
 ---
 
 From Oct 7th to Dec 1st, [a course][coursera] on Søren Kierkegaard

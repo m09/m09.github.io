@@ -1,6 +1,6 @@
 ---
 title: A nice maths problem: the B52 and the submarine
-author: Mog
+author: m09
 ---
 
 During a class the other day, our teacher told us about a nice
