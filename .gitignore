@@ -1,9 +1,3 @@
-# Hakyll build
 _site
-_cache
-
-# Stack stuff
-.stack-work
-
-# Backup files
+.sass-cache
 *~
