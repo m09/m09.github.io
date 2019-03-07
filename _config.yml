@@ -9,6 +9,6 @@ markdown: kramdown
 theme: minima
 permalink: pretty
 show_excerpts: True
+sass:
+    sass_dir: _sass
 excerpt_separator: <!--more-->
-plugins:
-  - jekyll-feed
