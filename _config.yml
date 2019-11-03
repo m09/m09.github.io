@@ -3,12 +3,14 @@ email: mog@crydee.eu
 description: "m09's personal website."
 baseurl: ""
 url: "https://crydee.eu"
-github_username:  m09
+github_username: m09
 
 markdown: kramdown
+plugins:
+  - jemoji
 theme: minima
 permalink: pretty
 show_excerpts: True
 sass:
-    sass_dir: _sass
+  sass_dir: _sass
 excerpt_separator: <!--more-->
