@@ -12,6 +12,8 @@ order: 4
 
 [:uk: Tech & Environmental Collapse](https://www.eventbrite.com/e/tech-environmental-collapse-tickets-57986002695)
 
+[:uk: Machine Learning for Large Scale Code Analysis](https://github.com/m09/talks/tree/master/kth)
+
 [:fr: Ivre, il pratiquait le ML sans recul](https://github.com/nantes-machine-learning-meetup/NMLM/tree/master/2019-02-10__ivre-ml)
 
 ## 2018
