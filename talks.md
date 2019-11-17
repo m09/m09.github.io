@@ -12,9 +12,9 @@ order: 4
 [:fr: Overton, le ML goût pomme](https://www.meetup.com/Nantes-Machine-Learning-Meetup/events/265265431/)
 [:octocat:](https://github.com/m09/decks/blob/master/2019-10-overton/index.html)
 [:arrow_forward:](https://decks.crydee.eu/2019-10-overton/index.html)
-[:uk:
+(:uk: English version
 [:octocat:](https://github.com/m09/decks/blob/master/2019-10-overton/index-en.html)
-[:arrow_forward:](https://decks.crydee.eu/2019-10-overton/index-en.html)]
+[:arrow_forward:](https://decks.crydee.eu/2019-10-overton/index-en.html))
 
 [:uk: Tech & Environmental Collapse](https://www.eventbrite.com/e/tech-environmental-collapse-tickets-57986002695)
 [:octocat:](https://github.com/m09/decks/tree/master/2019-03-tech-collapse)
