@@ -4,6 +4,12 @@ title: Talks
 order: 4
 ---
 
+## 2020
+
+[:fr: Faisons connaissance avec les Transformeurs](https://www.meetup.com/Nantes-Machine-Learning-Meetup/events/268243136/)
+[:octocat:](https://github.com/m09/decks/tree/master/2020-02-transformers/index.html)
+[:arrow_forward:](https://decks.crydee.eu/2020-02-transformers/index.html)
+
 ## 2019
 
 :uk: Understand your code with Machine Learning on Source Code
