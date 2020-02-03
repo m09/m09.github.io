@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Go
-order: 3
+order: 1
 ---
 
 Go is a great strategic game, similar to chess and extremely popular in Korea, China and Japan.

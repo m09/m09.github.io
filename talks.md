@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Talks
-order: 4
+order: 2
 ---
 
 ## 2020
