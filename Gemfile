@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 3.8.5"
+gem "jekyll", "~> 3.8"
+gem "kramdown", "~> 2.3"
+gem "kramdown-parser-gfm"
 gem "jemoji"
 gem "minima", "~> 2.0"
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
