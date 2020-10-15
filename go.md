@@ -20,6 +20,7 @@ For 9x9, [GoQuest](http://wars.fm/go9) has a game ready in seconds.
 I use mainly [Tsumego Pro](https://senseis.xmp.net/?TsumegoPro), even though the problems are badly ranked.
 From time to time I also use the [collections gathered by tasuki](https://tsumego.tasuki.org/).
 They contain only problems, not solutions, which makes them both frustrating at times and very rewarding.
+If you don't mind the Chinese interface, [101weiqi](https://www.101weiqi.com/) is a blast: it has many problems and they are very well ranked.
 Last but not least, [goproblems.com](http://goproblems.com/) has a huge database of problems that is collaboratively extended and curated.
 
 ## Learning
@@ -27,7 +28,7 @@ Last but not least, [goproblems.com](http://goproblems.com/) has a huge database
 Apart from playing mindfully (which is by far the fastest and most efficient way to improve), the ways to learn I enjoyed the most were:
 
 - getting reviews from stronger players both online and in local clubs
-- learning from Inseong Hwang at the [European Yunguseng Dojo](https://eyd.yunguseng.com/)
-- reviewing my own games with [Leela Zero](https://github.com/leela-zero/leela-zero/), using [Lizzie](https://github.com/leela-zero/leela-zero/) as an interface
+- learning from a strong teacher, such as Inseong Hwang at the [European Yunguseng Dojo](https://eyd.yunguseng.com/)
+- reviewing my own games with [KataGo](https://github.com/lightvector/KataGo), using [Sabaki](https://sabaki.yichuanshen.de/) as an interface
 
 A friend of mine also started [:fr: Art du Go](https://artdugo.fr/), a great website to discover the fundamental concepts of Go if you understand French.
